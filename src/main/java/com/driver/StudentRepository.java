@@ -57,6 +57,7 @@ public class StudentRepository {
         for(String student : teacherStudentMap.get(teacher)) {
                 studentMap.remove(student);
         }
+        teacherMap.remove(teacher);
         teacherStudentMap.remove(teacher);
     }
 
