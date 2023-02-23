@@ -54,11 +54,17 @@ public class StudentRepository {
     }
 
     public void deleteTeacherByName( String teacher){
+        System.out.println(studentMap.size());
+        System.out.println(teacherMap.size());
+        System.out.println(teacherStudentMap.size());
         for(String student : teacherStudentMap.get(teacher)) {
                 studentMap.remove(student);
         }
         teacherMap.remove(teacher);
         teacherStudentMap.remove(teacher);
+        System.out.println(studentMap.size());
+        System.out.println(teacherMap.size());
+        System.out.println(teacherStudentMap.size());
     }
 
     public void deleteAllTeachers(){
