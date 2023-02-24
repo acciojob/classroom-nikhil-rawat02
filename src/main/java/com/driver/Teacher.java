@@ -21,4 +21,16 @@ public class Teacher {
     public String getName() {
         return name;
     }
+
+    public void setNumberOfStudents(int numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
+    }
+
+    public int getNumberOfStudents() {
+        return numberOfStudents;
+    }
+
+    public int getAge() {
+        return age;
+    }
 }

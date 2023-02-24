@@ -34,6 +34,8 @@ public class StudentRepository {
             list= teacherStudentMap.get(teacher);
         }else list = new ArrayList<>();
         list.add(student);
+        Teacher currTeacher = getTeacherByName(teacher);
+        currTeacher.setNumberOfStudents(currTeacher.getNumberOfStudents() + 1);
         teacherStudentMap.put(teacher,list);
     }
 
@@ -54,22 +56,23 @@ public class StudentRepository {
     }
 
     public void deleteTeacherByName( String teacher){
-        System.out.println(studentMap.size());
-        System.out.println(teacherMap.size());
-        System.out.println(teacherStudentMap.size());
         for(String student : teacherStudentMap.get(teacher)) {
                 studentMap.remove(student);
         }
         teacherMap.remove(teacher);
         teacherStudentMap.remove(teacher);
-        System.out.println(studentMap.size());
-        System.out.println(teacherMap.size());
-        System.out.println(teacherStudentMap.size());
+
+        getTeacherByName(teacher).setNumberOfStudents(0);
     }
 
     public void deleteAllTeachers(){
         studentMap.clear();
+        for (String teacher : teacherMap.keySet()){
+            getTeacherByName(teacher).setNumberOfStudents(0);
+        }
         teacherMap.clear();
         teacherStudentMap.clear();
+
+
     }
 }
