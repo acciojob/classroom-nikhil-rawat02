@@ -26,17 +26,11 @@ public class StudentRepository {
 
     public void addTeacher(Teacher teacher){
         teacherMap.put(teacher.getName(),teacher);
+        teacherStudentMap.put(teacher.getName(),new ArrayList<String>());
     }
 
     public void addStudentTeacherPair( String student, String teacher){
-        List <String> list;
-        if(teacherStudentMap.containsKey(teacher)){
-            list= teacherStudentMap.get(teacher);
-        }else list = new ArrayList<>();
-        list.add(student);
-        Teacher currTeacher = getTeacherByName(teacher);
-        currTeacher.setNumberOfStudents(currTeacher.getNumberOfStudents() + 1);
-        teacherStudentMap.put(teacher,list);
+       teacherStudentMap.get(teacher).add(student);
     }
 
     public Student getStudentByName(String name){
@@ -47,7 +41,8 @@ public class StudentRepository {
         return teacherMap.get(name);
     }
 
-    public List<String> getStudentsByTeacherName(String teacher){
+    public List<String> getStudentsByTeacherName(String teacher)throws  NullPointerException{
+        if(!teacherStudentMap.containsKey(teacher))return  new ArrayList<>();
         return new ArrayList<>(teacherStudentMap.get(teacher));
     }
 
@@ -55,21 +50,17 @@ public class StudentRepository {
         return new ArrayList<>(studentMap.keySet());
     }
 
-    public void deleteTeacherByName( String teacher){
+    public void deleteTeacherByName( String teacher)throws  NullPointerException{
         for(String student : teacherStudentMap.get(teacher)) {
                 studentMap.remove(student);
         }
         teacherMap.remove(teacher);
         teacherStudentMap.remove(teacher);
 
-        getTeacherByName(teacher).setNumberOfStudents(0);
     }
 
-    public void deleteAllTeachers(){
+    public void deleteAllTeachers()throws NullPointerException{
         studentMap.clear();
-        for (String teacher : teacherMap.keySet()){
-            getTeacherByName(teacher).setNumberOfStudents(0);
-        }
         teacherMap.clear();
         teacherStudentMap.clear();
 
