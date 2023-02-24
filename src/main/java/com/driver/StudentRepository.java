@@ -51,7 +51,8 @@ public class StudentRepository {
     }
 
     public void deleteTeacherByName( String teacher)throws  NullPointerException{
-        for(String student : teacherStudentMap.get(teacher)) {
+        List<String> students = teacherStudentMap.get(teacher);
+        for(String student : students) {
                 studentMap.remove(student);
         }
         teacherMap.remove(teacher);
@@ -60,10 +61,14 @@ public class StudentRepository {
     }
 
     public void deleteAllTeachers()throws NullPointerException{
-        studentMap.clear();
+        for(String teacher : teacherStudentMap.keySet()){
+            List<String> student = teacherStudentMap.get(teacher);
+            for (String s : student){
+                studentMap.remove(s);
+            }
+        }
+
         teacherMap.clear();
         teacherStudentMap.clear();
-
-
     }
 }
